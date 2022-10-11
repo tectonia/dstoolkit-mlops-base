@@ -8,8 +8,8 @@ variables:
   # PRD Environment
   ENVIRONMENT: PRD
   RESOURCE_GROUP: rg-mlops-template-prod-001
-  LOCATION: westeurope
-  NAMESPACE: mlopsprodtmpl
+  LOCATION: uksouth
+  NAMESPACE: mlopsprodtmplmartyna
   AMLWORKSPACE: aml$(NAMESPACE)
   STORAGEACCOUNT: sa$(NAMESPACE)
   KEYVAULT: kv$(NAMESPACE)
