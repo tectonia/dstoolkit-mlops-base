@@ -8,8 +8,8 @@ variables:
   # DEV Environment
   ENVIRONMENT: DEV
   RESOURCE_GROUP: rg-mlops-template-dev-001
-  LOCATION: westeurope
-  NAMESPACE: mlopsdevtmpl
+  LOCATION: uksouth
+  NAMESPACE: mlopsdevtmplmartyna
   SERVICECONNECTION_RG: conn-mlops-sub-infra
   SERVICECONNECTION_WS: conn-mlops-aml-bsc-dev-tmpl
   AMLWORKSPACE: aml$(NAMESPACE)
