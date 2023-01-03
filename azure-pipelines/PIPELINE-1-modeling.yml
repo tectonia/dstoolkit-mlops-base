@@ -20,12 +20,13 @@ pr:
 
 variables:
 - template: ../configuration/configuration-aml.variables.yml
-- ${{ if eq(variables['Build.SourceBranchName'], 'main') }}:
-    # 'main' branch: PRD environment
-    - template: ../configuration/configuration-infra-PRD.variables.yml
-- ${{ if ne(variables['Build.SourceBranchName'], 'main') }}:  
+# commented out conditions bc i havent set up prod resources
+# - ${{ if eq(variables['Build.SourceBranchName'], 'main') }}:
+#     # 'main' branch: PRD environment
+#     - template: ../configuration/configuration-infra-PRD.variables.yml
+# - ${{ if ne(variables['Build.SourceBranchName'], 'main') }}:  
     # 'develop' or feature branches: DEV environment
-    - template: ../configuration/configuration-infra-DEV.variables.yml
+- template: ../configuration/configuration-infra-DEV.variables.yml
 - name: ARTIFACT_NAME
   value: DeploymentCode
 

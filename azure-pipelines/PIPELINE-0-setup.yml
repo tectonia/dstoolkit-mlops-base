@@ -51,23 +51,23 @@ stages:
       amlWorkspace: $(AMLWORKSPACE)
 
 # Deploy PRD Environment
-- stage: deployinfra_prd
-  displayName: 'Deploy PRD Environment'
-  condition: eq(variables['build.sourceBranch'], 'refs/heads/main')
-  variables:
-  - template: ../configuration/configuration-infra-PRD.variables.yml
-  jobs:
-  - template: templates/deploy-env-infra.template.yml
-    parameters:
-      environment: $(ENVIRONMENT)
-      serviceConnection: $(SERVICECONNECTION_RG)
-      resourceGroup: $(RESOURCE_GROUP)
-      location: $(LOCATION)
-      storageAccount: $(STORAGEACCOUNT)
-      keyVault: $(KEYVAULT)
-      appInsights: $(APPINSIGHTS)
-      containerRegistry: $(CONTAINERREGISTRY)
-      amlWorkspace: $(AMLWORKSPACE)
+# - stage: deployinfra_prd
+#   displayName: 'Deploy PRD Environment'
+#   condition: eq(variables['build.sourceBranch'], 'refs/heads/main')
+#   variables:
+#   - template: ../configuration/configuration-infra-PRD.variables.yml
+#   jobs:
+#   - template: templates/deploy-env-infra.template.yml
+#     parameters:
+#       environment: $(ENVIRONMENT)
+#       serviceConnection: $(SERVICECONNECTION_RG)
+#       resourceGroup: $(RESOURCE_GROUP)
+#       location: $(LOCATION)
+#       storageAccount: $(STORAGEACCOUNT)
+#       keyVault: $(KEYVAULT)
+#       appInsights: $(APPINSIGHTS)
+#       containerRegistry: $(CONTAINERREGISTRY)
+#       amlWorkspace: $(AMLWORKSPACE)
 
 
 #####################
@@ -89,19 +89,19 @@ stages:
       amlWorkspace: $(AMLWORKSPACE)
 
 # Compute Setup PRD Environment
-- stage: computesetup_prd
-  displayName: 'Compute Setup PRD Environment'
-  dependsOn: deployinfra_prd
-  condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/main'))
-  variables:
-  - template: ../configuration/configuration-infra-PRD.variables.yml
-  jobs:
-  - template: templates/setup-compute.template.yml
-    parameters:
-      environment: $(ENVIRONMENT)
-      serviceConnection: $(SERVICECONNECTION_RG)
-      resourceGroup: $(RESOURCE_GROUP)
-      amlWorkspace: $(AMLWORKSPACE)
+# - stage: computesetup_prd
+#   displayName: 'Compute Setup PRD Environment'
+#   dependsOn: deployinfra_prd
+#   condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/main'))
+#   variables:
+#   - template: ../configuration/configuration-infra-PRD.variables.yml
+#   jobs:
+#   - template: templates/setup-compute.template.yml
+#     parameters:
+#       environment: $(ENVIRONMENT)
+#       serviceConnection: $(SERVICECONNECTION_RG)
+#       resourceGroup: $(RESOURCE_GROUP)
+#       amlWorkspace: $(AMLWORKSPACE)
 
 
 ########################
@@ -122,15 +122,15 @@ stages:
       amlWorkspace: $(AMLWORKSPACE)
 
 # Data Prep PRD Environment
-- stage: dataprep_prd
-  displayName: 'Data Preparation PRD Environment'
-  dependsOn: deployinfra_prd
-  condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/main'))
-  variables:
-  - template: ../configuration/configuration-infra-PRD.variables.yml
-  jobs:
-  - template: templates/update-data.template.yml
-    parameters:
-      serviceConnection: $(SERVICECONNECTION_RG)
-      resourceGroup: $(RESOURCE_GROUP)
-      amlWorkspace: $(AMLWORKSPACE)
+# - stage: dataprep_prd
+#   displayName: 'Data Preparation PRD Environment'
+#   dependsOn: deployinfra_prd
+#   condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/main'))
+#   variables:
+#   - template: ../configuration/configuration-infra-PRD.variables.yml
+#   jobs:
+#   - template: templates/update-data.template.yml
+#     parameters:
+#       serviceConnection: $(SERVICECONNECTION_RG)
+#       resourceGroup: $(RESOURCE_GROUP)
+#       amlWorkspace: $(AMLWORKSPACE)
