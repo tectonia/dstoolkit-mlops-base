@@ -55,7 +55,7 @@ def main(model_path, dataset_path, output_dir):
 #             step_run.log(k, v)
 #             if pipeline_run is not None:
 #                 pipeline_run.log(k, v)
-      for k, v in metrics.items():
+    for k, v in metrics.items():
         mlflow.log_metric(k, v)
         
     # Save figures in run outputs
