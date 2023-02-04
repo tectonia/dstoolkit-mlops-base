@@ -44,7 +44,7 @@ jobs:
         amlWorkspace: ${{parameters.amlWorkspace}}
         scriptPath: src/snapshot_data.py
         scriptArguments: --datastore $(datavars.datastore) --path $(datavars.datapath)
-        scriptExtraDependencies: azureml-opendatasets==$(SDK_VERSION) joblib pandas
+        scriptExtraDependencies: azureml-opendatasets==$(SDK_VERSION) joblib pandas mlflow
         displayName: 'Create Data Snapshot' 
 
 - job: register_dataset

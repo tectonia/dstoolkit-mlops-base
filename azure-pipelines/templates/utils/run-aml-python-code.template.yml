@@ -17,7 +17,7 @@ parameters:
   default: ''
 - name: scriptExtraDependencies
   type: string
-  default: 'mlflow'
+  default: ''
 - name: displayName
   type: string
   default: 'Run Python Code'
