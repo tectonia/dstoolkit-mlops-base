@@ -85,4 +85,4 @@ jobs:
               amlWorkspace: ${{parameters.amlWorkspace}}
               scriptPath: $(System.ArtifactsDirectory)/deploymentcode/${{parameters.deploymentScript}}
               scriptArguments: ${{parameters.scriptArguments}}
-              scriptExtraDependencies: pyyaml
+              scriptExtraDependencies: pyyaml mlflow
