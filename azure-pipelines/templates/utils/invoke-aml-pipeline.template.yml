@@ -55,10 +55,6 @@ jobs:
     variables: 
       pipeline_id: $[ dependencies.pipeline_id.outputs['get_pipeline_id.pipeline_id'] ]
     steps:
-        - script: |
-            pandas --version
-            pip install mlflow
-            mlflow --version
         - task: ms-air-aiagility.vss-services-azureml.azureml-restApi-task.MLPublishedPipelineRestAPITask@0
           displayName: 'Invoke AML Pipeline'
           inputs:
