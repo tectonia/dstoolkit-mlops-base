@@ -8,4 +8,5 @@ dependencies:
   - joblib
   - pandas
   - matplotlib
+  - mlflow
 name: basic_env
