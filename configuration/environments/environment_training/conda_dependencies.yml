@@ -9,4 +9,5 @@ dependencies:
   - pandas
   - matplotlib
   - mlflow
+  - azureml-mlflow
 name: basic_env
