@@ -7,9 +7,6 @@ import argparse
 import joblib
 import pandas as pd
 from matplotlib import pyplot as plt
-from azureml.core import Run, Model
-from azureml.core.run import _OfflineRun
-from azureml.exceptions import WebserviceException
 import mlflow
 
 import aml_utils
@@ -31,10 +28,8 @@ def main(model_path, dataset_path, output_dir):
 
     """
     
-    mlflow.autolog()
+    mlflow.start_run() # Start an MLflow run
 
-#     step_run = Run.get_context()
-#     pipeline_run = step_run.parent
     ws = aml_utils.retrieve_workspace()
 
     print("Loading model...")
@@ -48,27 +43,20 @@ def main(model_path, dataset_path, output_dir):
     metrics, plots = get_model_evaluation(model, X_test, y_test)
     print(metrics)
 
-    # Save metrics in eval run and also parent run
+    # Save metrics MLFlow
     print("Saving metrics...")
-#     if not isinstance(step_run, _OfflineRun):
-#         for k, v in metrics.items():
-#             step_run.log(k, v)
-#             if pipeline_run is not None:
-#                 pipeline_run.log(k, v)
     for k, v in metrics.items():
         mlflow.log_metric(k, v)
-        
+     
     # Save figures in run outputs
     print(f"Saving figures in folder {DIR_FIGURES}...")
     os.makedirs(DIR_FIGURES, exist_ok=True)
     for fig_name, fig in plots.items():
         file_path = os.path.join(DIR_FIGURES, f'{fig_name}.png')
         fig.savefig(file_path)
-#         step_run.log_image(fig_name, file_path)
-#         if pipeline_run is not None:
-#             pipeline_run.log_image(fig_name, file_path)
-        mlflow.log_artifact(fig_name, file_path)
-
+        mlflow.log_artifact(file_path, artifact_path=DIR_FIGURES)
+    
+    mlflow.end_run()  # End the MLflow run
     print('Finished.')
 
 
