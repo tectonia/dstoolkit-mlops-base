@@ -65,7 +65,7 @@ def main(model_dir, model_name, model_description):
 
 
 def is_new_model_better(run, old_model):
-    metrics_new_model = mlflow.active_run().data.metrics
+    metrics_new_model = mlflow.last_active_run().data.metrics
     print(metrics_new_model)
     metrics_old_model = old_model.tags
     print(metrics_old_model)
