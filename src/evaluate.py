@@ -8,6 +8,8 @@ import joblib
 import pandas as pd
 from matplotlib import pyplot as plt
 import mlflow
+import uuid
+import random
 
 import aml_utils
 
@@ -27,8 +29,14 @@ def main(model_path, dataset_path, output_dir):
         None
 
     """
-    
-    mlflow.start_run() # Start an MLflow run
+    step_run = Run.get_context()
+    pipeline_run = step_run.parent
+    rd = random.Random()
+    rd.seed(pipeline_run)
+    unique_id = uuid.UUID(int=rd.getrandbits(128))
+    mlflow.start_run(run_id=unique_id) # Start an MLflow run
+    run = mlflow.get_run(run_id=unique_id)
+    print(run)
 
     ws = aml_utils.retrieve_workspace()
 
