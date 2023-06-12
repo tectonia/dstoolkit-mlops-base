@@ -4,6 +4,8 @@
 import os
 import argparse
 
+from azureml.core import Run
+
 import joblib
 import pandas as pd
 from matplotlib import pyplot as plt
@@ -29,12 +31,14 @@ def main(model_path, dataset_path, output_dir):
         None
 
     """
-    step_run = Run.get_context()
-    pipeline_run = step_run.parent
+    # Get unique id based on seed value (pipeline run id)
     rd = random.Random()
-    rd.seed(pipeline_run)
+    rd.seed((Run.get_context()).parent)
     unique_id = uuid.UUID(int=rd.getrandbits(128))
+    
     mlflow.start_run(run_id=unique_id) # Start an MLflow run
+    
+    # Debug
     run = mlflow.get_run(run_id=unique_id)
     print(run)
 
