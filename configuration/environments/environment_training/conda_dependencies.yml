@@ -8,6 +8,5 @@ dependencies:
   - joblib
   - pandas
   - matplotlib
-  - mlflow
   - azureml-mlflow
 name: basic_env
