@@ -8,6 +8,8 @@ from azureml.core import Run, Model
 from azureml.exceptions import WebserviceException
 from azureml.core.run import _OfflineRun
 
+import mlflow
+
 import aml_utils
 
 
@@ -63,12 +65,12 @@ def main(model_dir, model_name, model_description):
 
 
 def is_new_model_better(run, old_model):
-    metrics_new_model = run.get_metrics()
+    metrics_new_model = mlflow.active_run().data.metrics
     print(metrics_new_model)
     metrics_old_model = old_model.tags
     print(metrics_old_model)
     # Do your comparison here
-    is_better = metrics_new_model['examplemetric1'] >= float(metrics_old_model.get('examplemetric1', 0))
+    is_better = metrics_new_model.get('examplemetric1') >= float(metrics_old_model.get('examplemetric1', 0))
     return is_better
 
 
