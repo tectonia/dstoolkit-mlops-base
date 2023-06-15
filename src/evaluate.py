@@ -44,7 +44,7 @@ def main(model_path, dataset_path, output_dir):
     print("Creation timestamp: {}".format(experiment.creation_time))
     
     mlflow.set_experiment("mlflow-experiment")
-    mlflow.start_run() # Start an MLflow run
+    mlflow.start_run(experiment_id=experiment.experiment_id) # Start an MLflow run
     
     # Debug
     run = mlflow.active_run()
