@@ -35,8 +35,10 @@ def main(model_path, dataset_path, output_dir):
     rd = random.Random()
     rd.seed((Run.get_context()).parent)
     unique_id = uuid.UUID(int=rd.getrandbits(128))
+    print(unique_id)
+    print(type(unique_id))
     
-    mlflow.start_run(run_id=unique_id) # Start an MLflow run
+    mlflow.start_run(run_id=str(unique_id)) # Start an MLflow run
     
     # Debug
     run = mlflow.get_run(run_id=unique_id)
