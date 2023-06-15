@@ -30,6 +30,13 @@ def main(model_dir, model_name, model_description):
     step_run = Run.get_context()
     pipeline_run = step_run.parent
     ws = aml_utils.retrieve_workspace()
+    
+    runs = mlflow.search_runs(
+    output_format="list",
+    )
+    last_run = runs[-1]
+    print("Last run ID:", last_run.info.run_id)
+    print(last_run.data.metrics)
 
     try:
         # Retrieve latest model registered with same model_name
@@ -65,14 +72,10 @@ def main(model_dir, model_name, model_description):
 
 
 def is_new_model_better(run, old_model):
-    print(mlflow.last_active_run())
-    print(mlflow.last_active_run().data)
-    metrics_new_model = mlflow.last_active_run().data.metrics
-    print(metrics_new_model)
+    metrics_new_model = run.get_metrics()
     metrics_old_model = old_model.tags
-    print(metrics_old_model)
     # Do your comparison here
-    is_better = metrics_new_model.get('examplemetric1') >= float(metrics_old_model.get('examplemetric1', 0))
+    is_better = metrics_new_model['examplemetric1'] >= float(metrics_old_model.get('examplemetric1', 0))
     return is_better
 
 
