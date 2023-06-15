@@ -32,6 +32,12 @@ def main(model_path, dataset_path, output_dir):
     
     mlflow.start_run() # Start an MLflow run
     
+    # Debug
+    run = mlflow.active_run()
+    run_id = run.info.run_id
+    print(run_id)
+    print(run)
+    
     ws = aml_utils.retrieve_workspace()
 
     print("Loading model...")
