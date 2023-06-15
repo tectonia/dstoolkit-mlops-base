@@ -10,8 +10,6 @@ import joblib
 import pandas as pd
 from matplotlib import pyplot as plt
 import mlflow
-import uuid
-import random
 
 import aml_utils
 
@@ -31,19 +29,9 @@ def main(model_path, dataset_path, output_dir):
         None
 
     """
-    # Get unique id based on seed value (pipeline run id)
-    rd = random.Random()
-    rd.seed((Run.get_context()).parent)
-    unique_id = uuid.UUID(int=rd.getrandbits(128))
-    print(unique_id)
-    print(type(unique_id))
     
-    mlflow.start_run(run_id=str(unique_id)) # Start an MLflow run
+    mlflow.start_run() # Start an MLflow run
     
-    # Debug
-    run = mlflow.get_run(run_id=unique_id)
-    print(run)
-
     ws = aml_utils.retrieve_workspace()
 
     print("Loading model...")
