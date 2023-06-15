@@ -32,8 +32,11 @@ def main(model_dir, model_name, model_description):
     ws = aml_utils.retrieve_workspace()
     
     runs = mlflow.search_runs(
-        output_format="list"
+        experiment_names=["mlflow-experiment"],
+        output_format="list",
+        order_by=["start_time DESC"]
     )
+    print(last_run)
     last_run = runs[-1]
     print("Last run ID:", last_run.info.run_id)
     print(last_run.data.metrics)
