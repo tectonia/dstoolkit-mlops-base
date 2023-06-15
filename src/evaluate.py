@@ -29,7 +29,7 @@ def main(model_path, dataset_path, output_dir):
         None
 
     """
-    
+    mlflow.set_experiment("mlflow-experiment")
     mlflow.start_run() # Start an MLflow run
     
     # Debug
