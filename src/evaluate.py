@@ -43,7 +43,8 @@ def main(model_path, dataset_path, output_dir):
     print("Lifecycle_stage: {}".format(experiment.lifecycle_stage))
     print("Creation timestamp: {}".format(experiment.creation_time))
     
-    mlflow.set_experiment("mlflow-experiment")
+    active_experiment = mlflow.set_experiment(experiment_id=experiment.experiment_id)
+    print("Experiment_id: {}".format(active_experiment.experiment_id))
     mlflow.start_run(experiment_id=experiment.experiment_id) # Start an MLflow run
     
     # Debug
