@@ -54,7 +54,7 @@ def main(model_path, dataset_path, output_dir):
         run_id = run.info.run_id
         print(run_id)
         print(run)
-    else:
+    except:
         print("error encountered when trying to print active run")
     
     ws = aml_utils.retrieve_workspace()
