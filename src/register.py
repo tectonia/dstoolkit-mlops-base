@@ -9,6 +9,8 @@ from azureml.exceptions import WebserviceException
 from azureml.core.run import _OfflineRun
 
 import mlflow
+from mlflow import MlflowClient
+from mlflow.entities import Metric, Param, RunTag
 
 import aml_utils
 
@@ -30,26 +32,24 @@ def main(model_dir, model_name, model_description):
     step_run = Run.get_context()
     pipeline_run = step_run.parent
     ws = aml_utils.retrieve_workspace()
-    
+
+    # Searches for the MLFlow runs to identify run from evaluate stage
     runs = mlflow.search_runs(
         output_format="list",
         order_by=["start_time DESC"]
     )
-    last_run = runs[-1]
-    last_run2 = runs[-2]
-    last_run0 = runs[0]
-    last_run1 = runs[1]
-    print("-1 run ID:", last_run.info.run_id)
-    print("-2 run ID:", last_run2.info.run_id)
-    print("0 run ID:", last_run0.info.run_id)
-    print("1 run ID:", last_run1.info.run_id)
-    print(last_run1.data.metrics)
+    last_run = runs[1] # Run from evaluate stage
+    print("Last run ID:", last_run.info.run_id)
+    client = MlflowClient()
+    run = client.get_run(last_run.info.run_id)
+    print("last run metrics:", last_run.data.metrics)
+    print("client run metrics", run.data.metrics)
 
     try:
         # Retrieve latest model registered with same model_name
         model_registered = Model(ws, model_name)
 
-        if is_new_model_better(pipeline_run, model_registered):
+        if is_new_model_better(run, model_registered):
             print("New trained model is better than latest model.")
         else:
             print("New trained model is not better than latest model. Canceling job.")
@@ -82,7 +82,7 @@ def is_new_model_better(run, old_model):
     metrics_new_model = run.get_metrics()
     metrics_old_model = old_model.tags
     # Do your comparison here
-    is_better = last_run1.data.metrics['examplemetric1'] >= float(metrics_old_model.get('examplemetric1', 0))
+    is_better = run.data.metrics['examplemetric1'] >= float(metrics_old_model.get('examplemetric1', 0))
     return is_better
 
 
