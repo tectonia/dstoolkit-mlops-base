@@ -40,10 +40,10 @@ def main(model_dir, model_name, model_description):
     )
     last_run = runs[1] # Run from evaluate stage
     print("Last run ID:", last_run.info.run_id)
+    # Using the MLFlow client to get the metrics
     client = MlflowClient()
     run = client.get_run(last_run.info.run_id)
-    print("last run metrics:", last_run.data.metrics)
-    print("client run metrics", run.data.metrics)
+    print("Last run metrics:", run.data.metrics)
 
     try:
         # Retrieve latest model registered with same model_name
@@ -79,10 +79,10 @@ def main(model_dir, model_name, model_description):
 
 
 def is_new_model_better(run, old_model):
-    metrics_new_model = run.get_metrics()
+    metrics_new_model = run.data.metrics
     metrics_old_model = old_model.tags
     # Do your comparison here
-    is_better = run.data.metrics['examplemetric1'] >= float(metrics_old_model.get('examplemetric1', 0))
+    is_better = metrics_new_model['examplemetric1'] >= float(metrics_old_model.get('examplemetric1', 0))
     return is_better
 
 
