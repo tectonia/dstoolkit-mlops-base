@@ -62,19 +62,14 @@ def main(model_dir, model_name, model_description):
 
     print('Model should be registered. Proceeding...')
 
-    model_tags = {**pipeline_run.get_tags(), **pipeline_run.get_metrics()}
+    model_tags = {**pipeline_run.get_tags(), **run.data.metrics}
     print(f'Registering model with tags: {model_tags}')
 
     # Register model
     model_filename = f'{model_name}.pkl'  # As defined in train.py
     model_path_original = os.path.join(model_dir, model_filename)
     pipeline_run.upload_file(model_filename, model_path_original)
-    model = pipeline_run.register_model(
-        model_path=model_filename,
-        model_name=model_name,
-        tags=model_tags,
-        description=model_description
-    )
+    model = mlflow.register_model(model_uri=model_dir, name=model_name, tags=model_tags)
     print(f'Registered new model {model.name} version {model.version}')
 
 
