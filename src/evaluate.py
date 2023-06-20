@@ -35,9 +35,7 @@ def main(model_path, dataset_path, output_dir):
     # Debug
     try:
         run = mlflow.active_run()
-        run_id = run.info.run_id
-        print(run_id)
-        print(run)
+        print("Active run ID:", run.info.run_id)
     except:
         print("error encountered when trying to print active run")
     
