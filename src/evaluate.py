@@ -30,22 +30,6 @@ def main(model_path, dataset_path, output_dir):
 
     """
     
-    experiment_id = mlflow.create_experiment(
-        "mlflow-experiment",
-        artifact_location=DIR_FIGURES
-    )
-    experiment = mlflow.get_experiment(experiment_id)
-    
-    # debug
-    print("Name: {}".format(experiment.name))
-    print("Experiment_id: {}".format(experiment.experiment_id))
-    print("Artifact Location: {}".format(experiment.artifact_location))
-    print("Lifecycle_stage: {}".format(experiment.lifecycle_stage))
-    print("Creation timestamp: {}".format(experiment.creation_time))
-    
-    mlflow.set_experiment(experiment_id)
-    #print("Experiment_id: {}".format(active_experiment.experiment_id))
-    
     mlflow.start_run() # Start an MLflow run
     
     # Debug
