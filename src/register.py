@@ -39,10 +39,11 @@ def main(model_dir, model_name, model_description):
     last_run2 = runs[-2]
     last_run0 = runs[0]
     last_run1 = runs[1]
-    print("Last run ID:", last_run.info.run_id)
-    print("Last run ID:", last_run2.info.run_id)
-    print("Last run ID:", last_run1.info.run_id)
-    print(last_run.data.metrics)
+    print("-1 run ID:", last_run.info.run_id)
+    print("-2 run ID:", last_run2.info.run_id)
+    print("0 run ID:", last_run0.info.run_id)
+    print("1 run ID:", last_run1.info.run_id)
+    print(last_run1.data.metrics)
 
     try:
         # Retrieve latest model registered with same model_name
@@ -81,7 +82,7 @@ def is_new_model_better(run, old_model):
     metrics_new_model = run.get_metrics()
     metrics_old_model = old_model.tags
     # Do your comparison here
-    is_better = metrics_new_model['examplemetric1'] >= float(metrics_old_model.get('examplemetric1', 0))
+    is_better = last_run1.data.metrics['examplemetric1'] >= float(metrics_old_model.get('examplemetric1', 0))
     return is_better
 
 
