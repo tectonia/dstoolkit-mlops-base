@@ -32,12 +32,9 @@ def main(model_path, dataset_path, output_dir):
     
     mlflow.start_run() # Start an MLflow run
     
-    # Debug
-    try:
-        run = mlflow.active_run()
-        print("Active run ID:", run.info.run_id)
-    except:
-        print("error encountered when trying to print active run")
+    # Makes note of the MLFlow active run ID in case needed to debug
+    run = mlflow.active_run()
+    print("Active run ID:", run.info.run_id) 
     
     ws = aml_utils.retrieve_workspace()
 
