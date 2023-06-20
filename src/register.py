@@ -69,7 +69,7 @@ def main(model_dir, model_name, model_description):
     model_filename = f'{model_name}.pkl'  # As defined in train.py
     model_path_original = os.path.join(model_dir, model_filename)
     pipeline_run.upload_file(model_filename, model_path_original)
-    model = mlflow.register_model(model_uri=model_dir, name=model_name, tags=model_tags)
+    model = mlflow.register_model(f"runs:/{last_run.info.run_id}/{model_path_original}", model_name, tags=model_tags)
     print(f'Registered new model {model.name} version {model.version}')
 
 
