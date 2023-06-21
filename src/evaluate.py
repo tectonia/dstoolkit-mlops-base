@@ -32,7 +32,7 @@ def main(model_path, dataset_path, output_dir):
     
     mlflow.start_run() # Start an MLflow run
     
-    # Makes note of the MLFlow active run ID in case needed to debug
+    # Makes note of the MLflow active run ID
     run = mlflow.active_run()
     print("Active run ID:", run.info.run_id) 
     
@@ -49,7 +49,7 @@ def main(model_path, dataset_path, output_dir):
     metrics, plots = get_model_evaluation(model, X_test, y_test)
     print(metrics)
 
-    # Save metrics MLFlow
+    # Save metrics MLflow
     print("Saving metrics...")
     for k, v in metrics.items():
         mlflow.log_metric(k, v)
