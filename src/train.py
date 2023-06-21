@@ -28,7 +28,7 @@ def main(dataset_path, model_name, output_dir):
     print(f"Saving model in folder {output_dir}...")
     os.makedirs(output_dir, exist_ok=True)
     model_path = os.path.join(output_dir, f'{model_name}.pkl')
-    mlflow.pyfunc.save_model(model_path, python_model=model) # Save model 
+    mlflow.pyfunc.save_model(model_path, python_model=train) # Save model 
 
     print('Finished.')
 
