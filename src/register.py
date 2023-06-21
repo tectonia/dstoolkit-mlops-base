@@ -33,14 +33,14 @@ def main(model_dir, model_name, model_description):
     pipeline_run = step_run.parent
     ws = aml_utils.retrieve_workspace()
 
-    # Searches for the MLFlow runs to identify run from evaluate stage
+    # Searches for the MLflow runs to identify run from evaluate stage
     runs = mlflow.search_runs(
         output_format="list",
         order_by=["start_time DESC"]
     )
     last_run = runs[1] # Run from evaluate stage
     print("Last run ID:", last_run.info.run_id)
-    # Using the MLFlow client to get the metrics
+    # Using the MLflow client to get the metrics
     client = MlflowClient()
     run = client.get_run(last_run.info.run_id)
     print("Last run metrics:", run.data.metrics)
@@ -69,7 +69,7 @@ def main(model_dir, model_name, model_description):
     model_filename = f'{model_name}.pkl'  # As defined in train.py
     model_path_original = os.path.join(model_dir, model_filename)
     pipeline_run.upload_file(model_filename, model_path_original)
-    model = mlflow.register_model(f"runs:/{last_run.info.run_id}/{model_path_original}", model_name, tags=model_tags)
+    model = mlflow.register_model(model_filename, model_name, tags=model_tags)
     print(f'Registered new model {model.name} version {model.version}')
 
 
