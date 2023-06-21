@@ -6,6 +6,7 @@ import argparse
 
 import joblib
 import pandas as pd
+import mlflow
 # ...
 from azureml.core import Run
 
@@ -28,8 +29,7 @@ def main(dataset_path, model_name, output_dir):
     print(f"Saving model in folder {output_dir}...")
     os.makedirs(output_dir, exist_ok=True)
     model_path = os.path.join(output_dir, f'{model_name}.pkl')
-    with open(model_path, 'wb') as f:
-        joblib.dump(model, f)
+    mlflow.pyfunc.save_model(model_path, python_model=model) # Save model 
 
     print('Finished.')
 
