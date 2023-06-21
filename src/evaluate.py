@@ -6,9 +6,7 @@ import argparse
 
 from azureml.core import Run
 
-import joblib
 import pandas as pd
-from matplotlib import pyplot as plt
 import mlflow
 
 import aml_utils
@@ -39,7 +37,7 @@ def main(model_path, dataset_path, output_dir):
     ws = aml_utils.retrieve_workspace()
 
     print("Loading model...")
-    model = joblib.load(model_path)
+    model = mlflow.pyfunc.load_model(model_path)
 
     print("Reading test data...")
     data = pd.read_csv(dataset_path)
